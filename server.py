@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, redirect, url_for, render_template
 
 app = Flask(__name__)
 
@@ -6,13 +6,13 @@ app = Flask(__name__)
 def echo():
     data = request.get_json()
     text = data['text']
-    response = f"{text} {text}"
+    response = text + " " + text
     return response
 
 
 @app.route('/')
 def index():
-    return "hello world"
+    return render_template("index.html")
 
 if __name__ == '__main__':
     app.run()
