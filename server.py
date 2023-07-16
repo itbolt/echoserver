@@ -1,4 +1,5 @@
-from flask import Flask, request, redirect, url_for, render_template
+import os
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -6,13 +7,10 @@ app = Flask(__name__)
 def echo():
     data = request.get_json()
     text = data['text']
-    response = text + " " + text
+    response = f"{text} {text}"
     return response
 
-
-@app.route('/')
-def index():
-  return '', 200
-
 if __name__ == '__main__':
-    app.run()
+    # Use the PORT environment variable if available, otherwise default to 5000
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
