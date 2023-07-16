@@ -11,7 +11,7 @@ def echo():
     return response
 
 @app.route('/', methods=['GET'])
-def home():
+def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
