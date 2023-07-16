@@ -10,7 +10,7 @@ def echo():
     response = f"{text} {text}"
     return response
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def home():
     return render_template('index.html')
 
