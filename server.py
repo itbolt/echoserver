@@ -12,7 +12,7 @@ def echo():
 
 @app.route('/', methods=['GET'])
 def home():
-    return "hello! This is home page"
+    return render_template('index.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
