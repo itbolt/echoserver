@@ -4,7 +4,15 @@
     <title>Home Page</title>
 </head>
 <body>
-    <h1>Welcome to the Home Page</h1>
-    <p>This is a simple HTML home page served by the Flask server.</p>
+    <h1>Welcome to Echo Server!</h1>
+    <p>Type your message below:</p>
+    <form action="/echo" method="POST">
+        <input type="text" name="message" />
+        <button type="submit">Submit</button>
+    </form>
+    {% if response %}
+        <h2>Response:</h2>
+        <p>{{ response }}</p>
+    {% endif %}
 </body>
 </html>

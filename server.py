@@ -5,10 +5,8 @@ app = Flask(__name__)
 
 @app.route('/echo', methods=['POST'])
 def echo():
-    data = request.get_json()
-    text = data['text']
-    response = f"{text} {text}"
-    return response
+    message = request.form.get('message')
+    return (render_template('index.html', response=message))*2
 
 @app.route('/')
 def home():
