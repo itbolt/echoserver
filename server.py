@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/echo', methods=['POST'])
 def echo():
     message = request.form.get('message')
-    return (render_template('index.html', response=message))*2
+    return render_template('index.html', response=message*2)
 
 @app.route('/')
 def home():
