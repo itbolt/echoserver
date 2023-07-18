@@ -10,9 +10,22 @@ import openai
 # print the chat completion
 #print(chat_completion.choices[0].message.content)
 
-openai.api_key = os.environ.get("OPENAI_KEY")
+#openai.api_key = os.environ.get("OPENAI_KEY")
 
 app = Flask(__name__)
+
+openai.api_key = os.environ.get("OPENAI_KEY")
+
+# list models
+models = openai.Model.list()
+
+print(models.data[0].id)
+
+# create a chat completion
+completion = openai.Completion.create(model="text-davinci-003", prompt="Hello world")
+print(completion.choices[0].text)
+
+
 
 
 @app.route('/')
@@ -28,19 +41,24 @@ def echo():
 
 
 @app.route('/chat', methods=['POST'])
-def chat_with_openai():
+def chat():
     data = request.get_json()
-    user_input = data.get('text', '')
+    user_message = data['message']
     
-    # Call the OpenAI API to get the chat response
+    # Call the OpenAI API to get a response
     response = openai.Completion.create(
-        engine="davinci",
-        prompt=user_input,
-        max_tokens=100,
+        engine="text-davinci-002",  # You can choose a different engine if needed
+        prompt=user_message,
+        max_tokens=150,
+        temperature=0.7,
+        n=1,
+        stop=None
     )
     
-    chat_response = response.choices[0].text.strip()
-    return jsonify({'response': chat_response})
+    # Extract the response text from the API response
+    chat_response = response['choices'][0]['text'].strip()
+    
+    return chat_response
 
 
 
