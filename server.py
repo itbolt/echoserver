@@ -3,6 +3,15 @@ from flask import Flask, request, jsonify, render_template
 import openai
 
 openai.api_key = os.environ.get("OPENAI_KEY")
+print(models.data[0].id)
+
+# create a chat completion
+chat_completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": "Hello world"}])
+
+# print the chat completion
+print(chat_completion.choices[0].message.content)
+
+
 app = Flask(__name__)
 
 @app.route('/echo', methods=['POST'])
