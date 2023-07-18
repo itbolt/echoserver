@@ -14,7 +14,7 @@ import openai
 
 app = Flask(__name__)
 
-openai.api_key = "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"
+openai.api_key = os.environ.get("OPENAI_KEY")
 
 # list models
 models = openai.Model.list()
