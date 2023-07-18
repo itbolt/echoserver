@@ -1,6 +1,8 @@
 import os
 from flask import Flask, request, jsonify, render_template
 import openai
+
+openai.api_key = os.environ.get("OPENAI_KEY")
 app = Flask(__name__)
 
 @app.route('/echo', methods=['POST'])
