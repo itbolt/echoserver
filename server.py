@@ -59,7 +59,7 @@ def chat():
     # Extract the response text from the API response
     chat_response = response['choices'][0]['text'].strip()
     
-    return chat_response
+    print(chat_response)
 
 
 
