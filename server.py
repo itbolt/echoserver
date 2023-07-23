@@ -54,24 +54,22 @@ def chat():
     
     return render_template('index.html', response1=chat_response)
 
-
-@app.route('/reaction', methods=['POST'])
-def reaction():
-    data = request.get_json()
+@app.route('/store_feedback', methods=['POST'])
+def store_feedback():
+    data = request.json
     question = data.get('question')
     response = data.get('response')
     reaction = data.get('reaction')
-    
-    # Store the user's reaction in the MongoDB collection
+
+    # Store the question, response, and reaction in the MongoDB database
     document = {
         'question': question,
         'response': response,
         'reaction': reaction
     }
     collection.insert_one(document)
-    
-    return jsonify(success=True)
 
+    return jsonify({'message': 'Feedback stored successfully'})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

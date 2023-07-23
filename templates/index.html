@@ -24,40 +24,30 @@
     {% if response1 %}
         <h2>Response:</h2>
         <p>{{ response1 }}</p>
+        <button onclick="sendFeedback('like1')">Like</button>
+        <button onclick="sendFeedback('dislike1')">Dislike</button>
     {% endif %}    
 
-    <div>
-        <button onclick="sendFeedback(true)">Like</button>
-        <button onclick="sendFeedback(false)">Dislike</button>
-    </div>
-    
-    <!-- Your existing JavaScript code -->
     <script>
-        // ... (your existing JavaScript code)
-    
-        function sendFeedback(like) {
-            const message = document.getElementById('message').value;
-            const data = {
-                message: message,
-                like: like
-            };
-    
-            // Send the feedback to the server using fetch API
-            fetch('/chat', {
+        function sendFeedback(reaction) {
+            // Get the user's question and ChatGPT response from the page
+            var question = document.getElementsByName('message')[1].value;
+            var response = document.getElementById('response').textContent;
+
+            // Send the user's question, ChatGPT response, and reaction to the server
+            fetch('/store_feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
-            }).then(response => response.json())
-            .then(data => {
-                // Handle the response if needed
-                console.log(data.response);
-            }).catch(error => {
-                // Handle error if any
-                console.error('Error:', error);
+                body: JSON.stringify({
+                    'question': question,
+                    'response': response,
+                    'reaction': reaction
+                })
             });
         }
     </script>
+
 </body>
 </html>
