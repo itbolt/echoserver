@@ -56,13 +56,11 @@ def chat():
 
 
 
-
 @app.route('/feedback', methods=['POST'])
 def feedback():
-    data = request.get_json()
-    reaction = data.get('reaction')
+    reaction = request.json.get('reaction')
 
-    # Store the response and reaction in the MongoDB collection
+    # Store the reaction in the MongoDB collection
     feedback_data = {
         'reaction': reaction
     }
@@ -72,8 +70,6 @@ def feedback():
 
     # Return a response to the client (optional)
     return jsonify({'message': 'Feedback received'})
-
-
 
 
 
