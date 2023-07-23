@@ -53,10 +53,23 @@ def chat():
     
     # Extract the response text from the API response
     chat_response = response['choices'][0]['text'].strip()
+
+    like = data.get('like', None)
+    dislike = data.get('dislike', None)
     
-    print("User Message:", user_message)
-    print("AI Response:", chat_response)
-    return '', 204
+    if like or dislike:
+        feedback = {
+            'message': user_message,
+            'response': chat_response,
+            'like': like,
+            'dislike': dislike
+        }
+        collection.insert_one(feedback)
+    
+    # Return the response text to the client
+    return jsonify({'response': chat_response})
+    
+    return chat_response
 
 
 

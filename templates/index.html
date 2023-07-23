@@ -26,6 +26,38 @@
         <p>{{ response }}</p>
     {% endif %}    
 
+    <div>
+        <button onclick="sendFeedback(true)">Like</button>
+        <button onclick="sendFeedback(false)">Dislike</button>
+    </div>
     
+    <!-- Your existing JavaScript code -->
+    <script>
+        // ... (your existing JavaScript code)
+    
+        function sendFeedback(like) {
+            const message = document.getElementById('message').value;
+            const data = {
+                message: message,
+                like: like
+            };
+    
+            // Send the feedback to the server using fetch API
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => response.json())
+            .then(data => {
+                // Handle the response if needed
+                console.log(data.response);
+            }).catch(error => {
+                // Handle error if any
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </body>
 </html>
