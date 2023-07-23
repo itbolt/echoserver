@@ -1,16 +1,11 @@
 import os
 from flask import Flask, request, jsonify, render_template
 import openai
+import pymongo
 
-#print(models.data[0].id)
-
-# create a chat completion
-#chat_completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": "Hello world"}])
-
-# print the chat completion
-#print(chat_completion.choices[0].message.content)
-
-#openai.api_key = os.environ.get("OPENAI_KEY")
+mongo_client = pymongo.MongoClient('mongodb+srv://mnguyen:Ntmntm1019@cluster0.ybulhme.mongodb.net/')
+db = mongo_client['NuocDB']
+collection = db['ResponseLog']
 
 app = Flask(__name__)
 
