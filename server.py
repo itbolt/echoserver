@@ -71,6 +71,32 @@ def store_feedback():
 
     return jsonify({'message': 'Feedback stored successfully'})
 
+
+
+
+
+@app.route('/feedback', methods=['POST'])
+def feedback():
+    data = request.get_json()
+    response = data.get('response')
+    reaction = data.get('reaction')
+
+    # You can store the response and reaction in the database or perform other actions here
+
+    # Return a response to the client (optional)
+    return jsonify({'message': 'Feedback received'})
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)

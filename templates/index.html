@@ -24,27 +24,43 @@
     {% if response1 %}
         <h2>Response:</h2>
         <p>{{ response1 }}</p>
-        <button onclick="sendFeedback('like', 'response1')">Like</button>
-    <button onclick="sendFeedback('dislike', 'response1')">Dislike</button>
+        <button id="likeButton">Like</button>
+        <button id="dislikeButton">Dislike</button>
     {% endif %}    
 
     <script>
-        function sendFeedback(reaction, responseElementId) {
-            // Get the user's question and ChatGPT response from the page
-            var question = document.getElementsByName('message')[1].value;
-            var response = document.getElementById(responseElementId).textContent;
+        document.getElementById("likeButton").addEventListener("click", function() {
+            // Send the "like" response to the Flask server
+            sendFeedback("like");
+        });
 
-            // Send the user's question, ChatGPT response, and reaction to the server
-            fetch('/store_feedback', {
-                method: 'POST',
+        document.getElementById("dislikeButton").addEventListener("click", function() {
+            // Send the "dislike" response to the Flask server
+            sendFeedback("dislike");
+        });
+
+        function sendFeedback(reaction) {
+            // Get the ChatGPT response from the page
+            var response = document.getElementById("response").textContent;
+
+            // Send the data to the Flask server using the Fetch API
+            fetch("/feedback", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    'question': question,
-                    'response': response,
-                    'reaction': reaction
+                    "response": response,
+                    "reaction": reaction
                 })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the Flask server
+                console.log("Feedback received:", data);
+            })
+            .catch(error => {
+                console.error("Error:", error);
             });
         }
     </script>
