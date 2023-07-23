@@ -54,8 +54,8 @@ def chat():
     # Extract the response text from the API response
     chat_response = response['choices'][0]['text'].strip()
 
-    like = data.get('like', None)
-    dislike = data.get('dislike', None)
+    like = user_message.get('like', None)
+    dislike = user_message.get('dislike', None)
     
     if like or dislike:
         feedback = {
