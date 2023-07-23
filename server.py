@@ -70,6 +70,8 @@ def feedback():
     }
     collection.insert_one(feedback_data)
 
+    print("Data received:", feedback_data)  # Add this line to print the data
+
     # Return a response to the client (optional)
     return jsonify({'message': 'Feedback received'})
 
