@@ -3,9 +3,17 @@ from flask import Flask, request, jsonify, render_template
 import openai
 import pymongo
 
-mongo_client = pymongo.MongoClient(os.environ.get("mongodb+srv://mnguyen:Ntmntm1019@cluster0.ybulhme.mongodb.net/"))
-db = mongo_client['NuocDB']
-collection = db['ResponseLog']
+mongodb_url = os.environ.get("MONGODB_URL")
+
+try:
+    # Connect to the MongoDB server
+    client = MongoClient(mongodb_url)
+    db = client["mydatabase"]  # Replace "mydatabase" with your database name
+    collection = db["mycollection"]  # Replace "mycollection" with your collection name
+
+    print("Connected to MongoDB successfully!")
+except Exception as e:
+    print(f"Error connecting to MongoDB: {e}")
 
 app = Flask(__name__)
 
@@ -70,11 +78,6 @@ def feedback():
 
     # Return a response to the client (optional)
     return jsonify({'message': 'Feedback received'})
-
-
-
-
-
 
 
 
