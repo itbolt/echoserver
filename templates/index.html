@@ -28,22 +28,20 @@
         <button id="dislikeButton">Dislike</button>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                document.getElementById("likeButton").addEventListener("click", function() {
-                    console.log("Like button clicked");
-                    // Send the "like" response to the Flask server
-                    sendFeedback("like");
-                });
+            document.getElementById("likeButton").addEventListener("click", function() {
+                console.log("Like button clicked");
+                // Send the "like" response to the server
+                sendFeedback("like");
+            });
     
-                document.getElementById("dislikeButton").addEventListener("click", function() {
-                    console.log("Dislike button clicked");
-                    // Send the "dislike" response to the Flask server
-                    sendFeedback("dislike");
-                });
+            document.getElementById("dislikeButton").addEventListener("click", function() {
+                console.log("Dislike button clicked");
+                // Send the "dislike" response to the server
+                sendFeedback("dislike");
+            });
     
-            }); 
-            function sendFeedback(reaction) {    
-                // Send the data to the Flask server using the Fetch API
+            function sendFeedback(reaction) {
+                // Send the data to the server using the Fetch API
                 fetch("/feedback", {
                     method: "POST",
                     headers: {
@@ -53,7 +51,13 @@
                         "reaction": reaction
                     })
                 })
-                
+                .then(() => {
+                    // Handle the successful completion of the POST request (if needed)
+                    console.log("Feedback sent successfully.");
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
             }
         </script>
     {% endif %}    
