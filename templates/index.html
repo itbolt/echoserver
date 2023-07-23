@@ -32,7 +32,7 @@
         function sendFeedback(reaction) {
             // Get the user's question and ChatGPT response from the page
             var question = document.getElementsByName('message')[1].value;
-            var response = document.getElementById('response').textContent;
+            var response = document.getElementById('response1').textContent;
 
             // Send the user's question, ChatGPT response, and reaction to the server
             fetch('/store_feedback', {
@@ -42,7 +42,7 @@
                 },
                 body: JSON.stringify({
                     'question': question,
-                    'response': response,
+                    'response1': response,
                     'reaction': reaction
                 })
             });
