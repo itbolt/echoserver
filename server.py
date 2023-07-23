@@ -37,13 +37,12 @@ def echo():
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    #data = request.form.get('message')
-    #user_message = data.get('text', '')
-    user_message = request.form.get('message')
+    data = request.get_json()
+    user_message = data['message']
     
     # Call the OpenAI API to get a response
     response = openai.Completion.create(
-        engine="text-davinci-002",  # You can choose a different engine if needed
+        engine="text-davinci-002",
         prompt=user_message,
         max_tokens=150,
         temperature=0.7,
@@ -53,21 +52,8 @@ def chat():
     
     # Extract the response text from the API response
     chat_response = response['choices'][0]['text'].strip()
-
-    like = user_message.get('like', None)
-    dislike = user_message.get('dislike', None)
     
-    if like or dislike:
-        feedback = {
-            'message': user_message,
-            'response': chat_response,
-            'like': like,
-            'dislike': dislike
-        }
-        collection.insert_one(feedback)
-    
-    # Return the response text to the client
-    return jsonify({'response': chat_response})
+    return chat_response
 
 
 @app.route('/reaction', methods=['POST'])
