@@ -60,12 +60,10 @@ def chat():
 @app.route('/feedback', methods=['POST'])
 def feedback():
     data = request.get_json()
-    response = data.get('response')
     reaction = data.get('reaction')
 
     # Store the response and reaction in the MongoDB collection
     feedback_data = {
-        'response': response,
         'reaction': reaction
     }
     collection.insert_one(feedback_data)
