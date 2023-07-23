@@ -66,8 +66,9 @@ def chat():
         }
         collection.insert_one(feedback)
     
-    # Return the response text to the client    
-    return chat_response
+    # Return the response text to the client
+    return jsonify({'response': chat_response})
+
 
 @app.route('/reaction', methods=['POST'])
 def reaction():
