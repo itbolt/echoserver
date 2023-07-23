@@ -29,6 +29,18 @@
     {% endif %}    
 
     <script>
+
+        document.getElementById("likeButton").addEventListener("click", function() {
+            console.log("Like button clicked");
+            // Send the "like" response to the Flask server
+            sendFeedback("like");
+        });
+
+        document.getElementById("dislikeButton").addEventListener("click", function() {
+            console.log("Dislike button clicked");
+            // Send the "dislike" response to the Flask server
+            sendFeedback("dislike");
+        });
         function sendFeedback(reaction) {
             // Get the ChatGPT response from the page
             var response = document.getElementById("response").textContent;
