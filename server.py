@@ -37,7 +37,7 @@ def echo():
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    data = request.get_json()
+    data = request.form.get('message')
     user_message = data['message']
     
     # Call the OpenAI API to get a response
