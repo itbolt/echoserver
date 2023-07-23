@@ -53,14 +53,7 @@
                         "reaction": reaction
                     })
                 })
-                .then(response => response.json())
-                .then(data => {
-                    // Handle the response from the Flask server
-                    console.log("Feedback received:", data);
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                });
+                
             }
         </script>
     {% endif %}    
