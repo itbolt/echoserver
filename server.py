@@ -66,12 +66,25 @@ def chat():
         }
         collection.insert_one(feedback)
     
-    # Return the response text to the client
-    return jsonify({'response': chat_response})
-    
+    # Return the response text to the client    
     return chat_response
 
-
+@app.route('/reaction', methods=['POST'])
+def reaction():
+    data = request.get_json()
+    question = data.get('question')
+    response = data.get('response')
+    reaction = data.get('reaction')
+    
+    # Store the user's reaction in the MongoDB collection
+    document = {
+        'question': question,
+        'response': response,
+        'reaction': reaction
+    }
+    collection.insert_one(document)
+    
+    return jsonify(success=True)
 
 
 if __name__ == '__main__':
