@@ -3,7 +3,9 @@ from flask import Flask, request, jsonify, render_template
 import openai
 import pymongo
 
-
+mongo_client = pymongo.MongoClient("mongodb+srv://mnguyen:Ntmntm1019@cluster0.ybulhme.mongodb.net/")
+db = mongo_client['NuocDB']
+collection = db['ResponseLog']
 
 app = Flask(__name__)
 
@@ -56,20 +58,6 @@ def chat():
 
 @app.route('/feedback', methods=['POST'])
 def feedback():
-
-    mongodb_url = os.environ.get("MONGODB_URL")
-
-    try:
-        # Connect to the MongoDB server
-        client = MongoClient(mongodb_url)
-        db = client["NuocDB"]  # Replace "mydatabase" with your database name
-        collection = db["ResponseLog"]  # Replace "mycollection" with your collection name
-
-        print("Connected to MongoDB successfully!")
-    except Exception as e:
-        print(f"Error connecting to MongoDB: {e}")
-
-
     reaction = request.json.get('reaction')
 
     # Store the reaction in the MongoDB collection
