@@ -24,15 +24,15 @@
     {% if response1 %}
         <h2>Response:</h2>
         <p>{{ response1 }}</p>
-        <button onclick="sendFeedback('like1')">Like</button>
-        <button onclick="sendFeedback('dislike1')">Dislike</button>
+        <button onclick="sendFeedback('like', 'response1')">Like</button>
+    <button onclick="sendFeedback('dislike', 'response1')">Dislike</button>
     {% endif %}    
 
     <script>
-        function sendFeedback(reaction) {
+        function sendFeedback(reaction, responseElementId) {
             // Get the user's question and ChatGPT response from the page
             var question = document.getElementsByName('message')[1].value;
-            var response = document.getElementById('response1').textContent;
+            var response = document.getElementById(responseElementId).textContent;
 
             // Send the user's question, ChatGPT response, and reaction to the server
             fetch('/store_feedback', {
@@ -42,7 +42,7 @@
                 },
                 body: JSON.stringify({
                     'question': question,
-                    'response1': response,
+                    'response': response,
                     'reaction': reaction
                 })
             });
