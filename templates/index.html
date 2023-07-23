@@ -10,9 +10,9 @@
         <input type="text" name="message" />
         <button type="submit">Submit</button>
     </form>
-    {% if response1 %}
+    {% if response %}
         <h2>Response:</h2>
-        <p>{{ response1 }}</p>
+        <p>{{ response }}</p>
     {% endif %}
 
 
@@ -27,10 +27,47 @@
         <button id="likeButton">Like</button>
         <button id="dislikeButton">Dislike</button>
 
-        <script src="/script.js"></script>
-    {% endif %}    
-
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("likeButton").addEventListener("click", function() {
+                    console.log("Like button clicked");
+                    // Send the "like" response to the Flask server
+                    sendFeedback("like");
+                });
     
+                document.getElementById("dislikeButton").addEventListener("click", function() {
+                    console.log("Dislike button clicked");
+                    // Send the "dislike" response to the Flask server
+                    sendFeedback("dislike");
+                });
+    
+            }); 
+            function sendFeedback(reaction) {
+                // Get the ChatGPT response from the page
+                var response = document.getElementById("response").textContent;
+    
+                // Send the data to the Flask server using the Fetch API
+                fetch("/feedback", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "response": response,
+                        "reaction": reaction
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response from the Flask server
+                    console.log("Feedback received:", data);
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            }
+        </script>
+    {% endif %}    
 
 </body>
 </html>
