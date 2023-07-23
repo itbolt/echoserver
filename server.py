@@ -8,8 +8,8 @@ mongodb_url = os.environ.get("MONGODB_URL")
 try:
     # Connect to the MongoDB server
     client = MongoClient(mongodb_url)
-    db = client["mydatabase"]  # Replace "mydatabase" with your database name
-    collection = db["mycollection"]  # Replace "mycollection" with your collection name
+    db = client["NuocDB"]  # Replace "mydatabase" with your database name
+    collection = db["ResponseLog"]  # Replace "mycollection" with your collection name
 
     print("Connected to MongoDB successfully!")
 except Exception as e:
