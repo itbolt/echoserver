@@ -44,7 +44,6 @@
             }); 
             function sendFeedback(reaction) {
                 // Get the ChatGPT response from the page
-                var response = document.getElementById("likeButton").textContent;
     
                 // Send the data to the Flask server using the Fetch API
                 fetch("/feedback", {
