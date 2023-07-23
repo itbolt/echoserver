@@ -31,8 +31,8 @@ def home():
 
 @app.route('/echo', methods=['POST'])
 def echo():
-    message = request.form.get('message')
-    return message + " " + message
+    response1 = request.form.get('message')
+    return response1 + " " + response1
 
 
 @app.route('/chat', methods=['POST'])
