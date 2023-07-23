@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, render_template
 import openai
 import pymongo
 
-mongo_client = pymongo.MongoClientos.environ.get("MONGODB_URI")
+mongo_client = pymongo.MongoClient(os.environ.get("MONGODB_URI"))
 db = mongo_client['NuocDB']
 collection = db['ResponseLog']
 
