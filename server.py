@@ -15,20 +15,18 @@ try:
 except Exception as e:
     print(e)
 
-print(db.list_collection_names())
 app = Flask(__name__)
 
-openai.api_key = os.environ.get("OPENAI_KEY")
+openai.api_key_path = "myenv\key.txt"
 
-# list models
-models = openai.Model.list()
-
-print(models.data[0].id)
-
-# create a chat completion
 completion = openai.Completion.create(model="text-davinci-003", prompt="Hello world")
 print(completion.choices[0].text)
 
+#GLOBAL VARS FOR ADDING TO MONGODB-----------------
+lobal_question = ""
+
+global_response = ""
+#--------------------------------------------------
 
 
 
@@ -36,13 +34,10 @@ print(completion.choices[0].text)
 def home():
     return render_template('index.html')
 
-
-
 @app.route('/echo', methods=['POST'])
 def echo():
     response1 = request.form.get('message')
     return response1 + " " + response1
-
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -61,6 +56,12 @@ def chat():
     # Extract the response text from the API response
     chat_response = response['choices'][0]['text'].strip()
     
+    global global_question 
+    global_question = user_message
+    global global_response
+
+    global_response = chat_response
+
     return render_template('index.html', response=chat_response)
 
 
@@ -71,6 +72,9 @@ def feedback():
     collection = db["ResponseLog"]
     # Store the reaction in the MongoDB collection
     feedback_data = {
+        'id' : 'reaction',
+        'question': global_question,
+        'response':global_response,
         'reaction': reaction
     }
     collection.insert_one(feedback_data)

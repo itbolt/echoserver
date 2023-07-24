@@ -42,19 +42,18 @@
     
             function sendFeedback(reaction) {
                 // Send the data to the server using the Fetch API
-                fetch("https://echoserverthingie-0a34357275a9.herokuapp.com/feedback", {
+                fetch("/feedback", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    
-                })
-                .then(() => {
-                    // Handle the successful completion of the POST request (if needed)
                     body: JSON.stringify({
                         "reaction": reaction
-                    });
-                    console.log("Feedback sent successfully.");
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Feedback sent successfully.", data);
                 })
                 .catch(error => {
                     console.error("Error:", error);
