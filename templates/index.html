@@ -47,12 +47,13 @@
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        "reaction": reaction
-                    })
+                    
                 })
                 .then(() => {
                     // Handle the successful completion of the POST request (if needed)
+                    body: JSON.stringify({
+                        "reaction": reaction
+                    });
                     console.log("Feedback sent successfully.");
                 })
                 .catch(error => {
