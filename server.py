@@ -5,21 +5,17 @@ import pymongo
 from pymongo import MongoClient
 
 uri = "mongodb+srv://mnguyen:Ntmntm1019@cluster0.ybulhme.mongodb.net/?retryWrites=true&w=majority"
-# Create a new client and connect to the server
 cluster = MongoClient(uri)
-# Send a ping to confirm a successful connection
+db = cluster['NuocDB']
+collections = db.list_collection_names()
+
 try:
     cluster.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
 except Exception as e:
     print(e)
-app = Flask(__name__)
 
-db = cluster['NuocDB']
-collection = db['ResponseLog']
-
-print(collection)
-
+print(db.list_collection_names())
 app = Flask(__name__)
 
 openai.api_key = os.environ.get("OPENAI_KEY")
@@ -72,7 +68,7 @@ def chat():
 @app.route('/feedback', methods=['POST'])
 def feedback():
     reaction = request.json.get('reaction')
-
+    collection = db["ResponseLog"]
     # Store the reaction in the MongoDB collection
     feedback_data = {
         'reaction': reaction
