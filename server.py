@@ -18,6 +18,8 @@ app = Flask(__name__)
 db = cluster['NuocDB']
 collection = db['ResponseLog']
 
+print(collection)
+
 app = Flask(__name__)
 
 openai.api_key = os.environ.get("OPENAI_KEY")
