@@ -27,6 +27,8 @@ print(completion.choices[0].text)
 lobal_question = ""
 
 global_response = ""
+
+global_comment = ""
 #--------------------------------------------------
 
 
@@ -65,7 +67,15 @@ def chat():
 
     return render_template('index.html', response=chat_response)
 
+@app.route('/comment', methods=['POST'])
+def comment():
+    data = request.get_json()
+    comment = data.get('comment')
 
+    global global_comment
+    global_comment = comment
+
+    return jsonify({'message': 'Comment submitted'})
 
 @app.route('/feedback', methods=['POST'])
 def feedback():
@@ -76,7 +86,8 @@ def feedback():
         'id' : 'reaction',
         'question': global_question,
         'response':global_response,
-        'reaction': reaction
+        'reaction': reaction,
+        'comment': global_comment
     }
     collection.insert_one(feedback_data)
 

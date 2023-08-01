@@ -26,7 +26,7 @@
         <p>{{ response }}</p>
         <button id="likeButton">Like</button>
         <button id="dislikeButton">Dislike</button>
-        <input type="text" id="commentInput" placeholder="Enter your comment...">
+        <input type="text" id="commentInput" placeholder="Comment"/><button id="submitCommentButton">Submit Comment</button>
 
         <script>
             document.getElementById("likeButton").addEventListener("click", function() {
@@ -40,11 +40,36 @@
                 // Send the "dislike" response to the server
                 sendFeedback("dislike");
             });
-    
+
+            document.getElementById("submitCommentButton").addEventListener("click", function() {
+                console.log("Submit Comment button clicked");
+                sendComment();
+            });
+            
+            function sendComment() {
+                var comment = document.getElementById("commentInput").value;
+
+                fetch("/comment", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "comment": comment
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Comment submitted:", data);
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            }
+
             function sendFeedback(reaction) {
                 // Send the data to the server using the Fetch API
 
-                var comment = document.getElementById("commentInput").value;
                 fetch("/feedback", {
                     method: "POST",
                     headers: {
@@ -52,7 +77,6 @@
                     },
                     body: JSON.stringify({
                         "reaction": reaction,
-                        "comment": comment
                     })
                 })
                 .then(response => response.json())
