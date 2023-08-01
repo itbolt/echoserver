@@ -26,6 +26,7 @@
         <p>{{ response }}</p>
         <button id="likeButton">Like</button>
         <button id="dislikeButton">Dislike</button>
+        <input type="text" id="commentInput" placeholder="Enter your comment...">
 
         <script>
             document.getElementById("likeButton").addEventListener("click", function() {
@@ -42,13 +43,16 @@
     
             function sendFeedback(reaction) {
                 // Send the data to the server using the Fetch API
+
+                var comment = document.getElementById("commentInput").value;
                 fetch("/feedback", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        "reaction": reaction
+                        "reaction": reaction,
+                        "comment": comment
                     })
                 })
                 .then(response => response.json())
